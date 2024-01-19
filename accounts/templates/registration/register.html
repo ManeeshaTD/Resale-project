@@ -1,0 +1,82 @@
+{% extends 'base2.html' %}
+{% load bootstrap4 %}
+{% block body %}
+  
+
+	 <section>
+			<div id="page-wrapper" class="sign-in-wrapper">
+				<div class="graphs">
+					<div class="sign-in-form">
+						<div class="sign-in-form-top">
+							<h1>Register</h1>
+						</div>
+						<div class="signin">
+							<form method="post" class="form" action="" enctype="multipart/form-data">
+								{% csrf_token %}
+								
+								{% block bootstrap4_horizontal %}
+								<div class="row">
+									<div class="col-md-6">
+										{% bootstrap_field user_form.first_name %}
+									</div>
+									<div class="col-md-6">
+										{% bootstrap_field user_form.last_name %}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										{% bootstrap_field user_form.username %}
+									</div>
+									<div class="col-md-6">
+										{% bootstrap_field user_form.password1 %}
+									</div>
+									
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										{% bootstrap_field user_form.email %}
+									</div>
+									<div class="col-md-6">
+										{% bootstrap_field profile_form.mobile %}
+									</div>
+								</div>
+								<div class="row">
+									
+									<div class="col-md-6">
+										{% bootstrap_field profile_form.state %}
+									</div>
+									<div class="col-md-6">
+										{% bootstrap_field profile_form.city %}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										{% bootstrap_field profile_form.image %}
+									</div>
+									<div class="col-md-12">
+										{% bootstrap_field profile_form.address %}
+									</div>
+								</div>
+								{% endblock %}
+
+								{% buttons %}
+									<input type="submit" class="btn btn-primary" value="Register">
+								{% endbuttons %}
+							</form>
+						</div>
+						<div class="new_people">
+							<h2>You Have An Account</h2>
+							<p></p>
+							<a href="/accounts/login-user/">Login Now!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!--footer section start-->
+			<footer class="diff">
+			   <p class="text-center">&copy 2016 Resale. All Rights Reserved | Design by <a href="https://w3layouts.com/" target="_blank">w3layouts.</a></p>
+			</footer>
+        <!--footer section end-->
+	</section>
+
+    {% endblock body %}

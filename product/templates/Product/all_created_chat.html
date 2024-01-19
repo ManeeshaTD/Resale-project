@@ -1,0 +1,6 @@
+{% for i in chat_messages %}
+    <li class="{% if request.user.username == i.message_user.username %}repaly{% elif request.user.username == i.other_user.username %}repaly{% else %}sender{% endif %}">
+        <p> {{i.message}} </p>
+        <span class="time">{{i.created}}</span>
+    </li>
+{% endfor %}

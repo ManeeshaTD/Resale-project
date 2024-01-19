@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> {% endcomment %}
+
+	<!--single-page-->
+	<div class="single-page main-grid-border">
+		<div class="container">
+			<ol class="breadcrumb" style="margin-bottom: 5px;">
+				<li><a href="/">Home</a></li>
+				<li><a href="{% url 'products:product_list' %}">All Ads</a></li>
+				<li class="active">Mobile Phone</li>
+			</ol>
+			<div class="product-desc">
+				<div class="col-md-7 product-view">
+					<h2>{{product_detail.name}}</h2>
+					<p> <i class="glyphicon glyphicon-map-marker"></i><a href="#">state</a>, <a href="#">city</a>| Added at {{product_detail.created}}, Ad ID: 987654321</p>
+					<div class="flexslider">
+						<ul class="slides">
+                            
+                            {% for image in product_images %}
+                                                        
+                                <li data-thumb="{{image.image.url}}">
+                                    <img src="{{image.image.url}}" style="width:300px;height:300px"/>
+                                </li>
+
+                            {% endfor %}
+						</ul>
+					</div>
+					<!-- FlexSlider -->
+					<script defer src="{% static 'js/jquery.flexslider.js' %}"></script>
+					<link rel="stylesheet" href="{% static 'css/flexslider.css' %}" type="text/css" media="screen" />
+					<script>
+						$(window).load(function() {
+							$('.flexslider').flexslider({
+								animation: "slide",
+								controlNav: "thumbnails"
+							});
+						});
+					</script>
+					<!-- //FlexSlider -->
+					<div class="product-details">
+						<h4>Brand : <a href="#">{{product_detail.brand}}</a></h4>
+						<h4>Views : <strong>150</strong></h4>
+						<p><strong>Summary</strong> {{product_detail.description}}</p>
+					
+					</div>
+
+					<a href="/products/chat/{{product_detail.id}}/?action=start-chat" class="btn btn-warning pull-center"><i class="bi bi-chat"></i> Chat Now</a>
+				</div>
+				<div class="col-md-5 product-details-grid">
+					<div class="item-price">
+						<div class="product-price">
+							<p class="p-price">Price</p>
+							<h3 class="rate">$ {{product_detail.price}}</h3>
+							<div class="clearfix"></div>
+						</div>
+						<div class="condition">
+							<p class="p-price">Condition</p>
+							<h4>{{product_detail.condition}}</h4>
+							<div class="clearfix"></div>
+						</div>
+						<div class="itemtype">
+							<p class="p-price">Item Type</p>
+							<h4>{{product_detail.category}}</h4>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					<div class="interested text-center">
+						<h4>Interested in this Ad?<small> Contact the Seller!</small></h4>
+						<p><i class="glyphicon glyphicon-earphone"></i>{{product_detail.owner.userprofile_set.all.0.mobile}}</p>
+					</div>
+						<div class="tips">
+						<h4>Safety Tips for Buyers</h4>
+							<ol>
+								<li><a href="#">Contrary to popular belief.</a></li>
+								<li><a href="#">Contrary to popular belief.</a></li>
+								<li><a href="#">Contrary to popular belief.</a></li>
+								<li><a href="#">Contrary to popular belief.</a></li>
+								<li><a href="#">Contrary to popular belief.</a></li>
+								<li><a href="#">Contrary to popular belief.</a></li>
+								<li><a href="#">Contrary to popular belief.</a></li>
+								<li><a href="#">Contrary to popular belief.</a></li>
+								<li><a href="#">Contrary to popular belief.</a></li>
+							</ol>
+						</div>
+				</div>
+			<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--//single-page-->
+
+		  
+	<div id="chatbot-container" style="display: none">
+		<div id="chatbot-interface">
+		  <div id="chatbot-header">
+			<p>{{request.user.username}} - Let's chat</p>
+			<p style="text-align:right">{{product_detail.name}}</p>
+		  </div>
+		  <div id="chatbot-chat">
+			<div class="chatbot-messages chatbot-received-messages">
+			  <p>With what can I help you today?</p>
+			</div>
+			<div class="chatbot-messages chatbot-received-messages">
+			  <p>Hello! I am [name], [company]'s chatbot</p>
+			</div>
+		  </div>
+		  <div id="chatbot-footer">
+			<div id="chatbot-input-container">
+			  <input type="text" id="chatbot-input" name="chatbot-input" placeholder="Type a command here...">
+			</div>
+			<div id="chatbot-new-message-send-button">
+			  <i class="material-icons" id="send-icon">send</i>
+			</div>
+		  </div>
+		</div>
+	</div>
+	  
+	  
+	  
+{% comment %} 	  
+	  <div id="chatbot-open-container">
+		<i class="material-icons" id="open-chat-button">chat</i>
+		<i class="material-icons" id="close-chat-button" style="display: none">close</i>
+	  </div> {% endcomment %}
+
+
+	  {% comment %} {% extends 'base.html' %} {% endcomment %}
+
+{% comment %} {% block content %} {% endcomment %}
+    {% comment %} <h1>Chat with {{ product.owner.username }}</h1>
+    <div id="chat-messages">
+        {% for message in messages %}
+            {% if message.product_user == request.user %}
+                <div class="message me">
+                    <span class="username">{{ message.product_user.username }}:</span>
+                    {{ message.message }}
+                </div>
+            {% else %}
+                <div class="message them">
+                    <span class="username">{{ message.product_user.username }}:</span>
+                    {{ message.message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <form id="chat-form">
+        {% csrf_token %}
+        <input type="text" id="chat-input" placeholder="Type your message here...">
+        <button type="submit">Send</button>
+    </form> {% endcomment %}
+{% comment %} {% endblock %} {% endcomment %}
+
+{% comment %} {% block scripts %} {% endcomment %}
+    {% comment %} <script>
+        var chatForm = document.getElementById('chat-form');
+        var chatInput = document.getElementById('chat-input');
+        var chatMessages = document.getElementById('chat-messages');
+
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var message = chatInput.value;
+            if (message.trim() != '') {
+                chatInput.value = '';
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{% url "products:chat" product_detail.id %}', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                xhr.onload = function() {
+                    if (xhr.status === 200 && xhr.responseText) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            var messageHTML = '<div class="message me"><span class="username">{{ request.user.username }}:</span>' + message + '</div>';
+                            chatMessages.insertAdjacentHTML('beforeend', messageHTML);
+                        }
+                    }
+                };
+                xhr.send('message=' + encodeURIComponent(message));
+            }
+        });
+    </script> {% endcomment %}
+{% comment %} {% endblock %} {% endcomment %}
+
+
+<script>
+	const chat = document.getElementById("chatbot-chat");
+
+	$("#chatbot-open-container").click(function(){
+		$("#open-chat-button").toggle(200);
+		$("#close-chat-button").toggle(200);
+		$("#chatbot-container").fadeToggle(200);
+	});
+
+	document.getElementById("chatbot-new-message-send-button").addEventListener("click", newInput);
+
+	document.getElementById("chatbot-input").addEventListener('keypress', function (e) {
+		if (e.key === 'Enter') {
+			newInput();
+		}
+	});
+
+	function newInput(){
+		newText = document.getElementById("chatbot-input").value;
+		if (newText != ""){
+		document.getElementById("chatbot-input").value = "";
+		addMessage("sent", newText);
+		generateResponse(newText);
+		}
+	}
+
+	function addMessage(type, text){
+		let messageDiv = document.createElement("div");
+		let responseText = document.createElement("p");
+		responseText.appendChild(document.createTextNode(text));
+		
+		if (type == "sent"){
+		messageDiv.classList.add("chatbot-messages", "chatbot-sent-messages");
+		} else if (type == "received"){
+		messageDiv.classList.add("chatbot-messages", "chatbot-received-messages");
+		}
+
+		messageDiv.appendChild(responseText);
+		chat.prepend(messageDiv);
+	}
+
+	function generateResponse(prompt){
+		// Here you can add your answer-generating code
+		addMessage("received", "Great to hear that!");
+	}
+</script>
+
+{% endblock body %}

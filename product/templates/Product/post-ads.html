@@ -1,0 +1,94 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block body %}
+<div class="banner text-center">
+    <div class="container">    
+          <h1>Sell or Advertise   <span class="segment-heading">    anything online </span> with Resale</h1>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+          <a href="">Post Free Ad</a>
+    </div>
+  </div>
+  <!-- Submit Ad -->
+  <div class="submit-ad main-grid-border">
+      <div class="container">
+            <h2 class="head">Post an Ad</h2>
+            <div class="post-ad-form">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label>Select Category <span>*</span></label>
+                    <select class="" name="category" required>
+                        <option value="">Select Category</option>
+                        {% for i in category %}
+                            <option value="{{i.id}}" {% if i.id == ad_post_pro.category.id %}selected{% endif %}>{{i.category_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="clearfix"></div>
+
+                    <label>Select Brand <span>*</span></label>
+                    <select class="" name="brand" required>
+                        <option value="">Select Brand</option>
+                        {% for i in brand %}
+                            <option value="{{i.id}}" {% if i.id == ad_post_pro.brand.id %}selected{% endif %}>{{i.brand_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="clearfix"></div>
+
+                    <label>Ad Title <span>*</span></label>
+                    <input type="text" class="phone" name="name" placeholder="Ads Title" value="{{ad_post_pro.name}}" required/>
+                    <div class="clearfix"></div>
+
+                    <label>Product Price <span>*</span></label>
+                    <input type="text" class="phone" name="price" placeholder="Product Price" value="{{ad_post_pro.price}}" required/>
+                    <div class="clearfix"></div>
+
+                    <label>Product Image <span>*</span></label>
+                    <input type="file" class="phone" name="image" {% if not ad_post_pro %}required{% endif %}>
+                    {% if ad_post_pro.image %}
+                        <img class="img-thumbnail" src="{{ad_post_pro.image.url}}" style="width:100px;height:100px"/>
+                    {% endif %}
+                    <div class="clearfix"></div>
+
+                    
+                    <br>
+
+                    <label>Product Condition <span>*</span></label>
+                    <select class="" name="condition" required>
+                        <option value="">Select Condition</option>
+                        {% for i in condition_type %}
+                            <option value="{{i.0}}" {% if i.0 == ad_post_pro.condition %}selected{% endif %}>{{i.1}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="clearfix"></div>
+
+                    <label>Ad description <span>*</span></label>
+                    <textarea class="mess" placeholder="Write few lines about your product" name="description">{{ad_post_pro.description}}</textarea>
+                    <div class="clearfix"></div>
+
+                    
+
+                    <div class="upload-ad-photos">
+                        <label>Add Extra Photos for your ad :</label>	
+                        <div class="photos-upload-view">
+                            <div>
+                                <input type="file" class="phone" id="fileselect" name="fileselect[]" multiple="multiple" />
+                            </div>
+
+                            {% for i in all_image %}
+                                <img class="img-thumbnail" src="{{i.image.url}}" style="width:100px;height:100px"/>
+                            {% endfor %}
+                        </div>
+                    <div class="clearfix"></div>
+                    {% comment %} <div id="submitbutton"> {% endcomment %}
+                        <button class="btn btn-warning pull-right" type="submit">Upload Files</button>
+                    {% comment %} </div> {% endcomment %}
+                </form>
+            </div>
+
+            <div class="personal-details">    
+            </div>
+          </div>
+      </div>	
+  </div>
+  <!-- // Submit Ad -->
+
+{% endblock body %}

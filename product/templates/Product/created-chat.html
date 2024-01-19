@@ -1,0 +1,4 @@
+<li class="{% if request.user.username == created_messages.message_user.username %}repaly{% elif request.user.username == created_messages.other_user.username %}repaly{% else %}sender{% endif %}">
+    <p> {{message}} </p>
+    <span class="time">{{created_messages.created}}</span>
+</li>
